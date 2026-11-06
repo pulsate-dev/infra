@@ -13,7 +13,6 @@ locals {
   # <alias>@pulsate.dev => owner label in var.email_routing_destinations
   email_routing_forwards = {
     info       = "pulsate"
-    billing    = "pulsate"
     moderator  = "pulsate"
     m1sk9      = "m1sk9"
     mikuroxina = "mikuroxina"

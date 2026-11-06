@@ -11,7 +11,6 @@ locals {
 
   imported_email_routing_rule_ids = {
     info       = "5e666ba273fb4137acd4f7d738751d6c"
-    billing    = "c88ac4254514413ebff3f3e9b55e31c0"
     moderator  = "1bfdf42bf7da453882f8d08c56fb54d7"
     m1sk9      = "ee29957826a34efe9e00efeba361792c"
     mikuroxina = "5da8dbbcb4134bffa1f6faf4614d283a"
