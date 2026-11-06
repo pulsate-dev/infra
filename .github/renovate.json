@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>pulsate-dev/renovate-conf"],
+  "enabledManagers": ["mise", "github-actions", "terraform"],
+  "packageRules": [
+    {
+      "description": "Merging to main applies to production, so neither the provider nor the actions holding the deploy credentials may land without review",
+      "matchManagers": ["terraform", "github-actions"],
+      "autoApprove": false,
+      "automerge": false
+    }
+  ]
+}

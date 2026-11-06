@@ -1,0 +1,43 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cd-main
+  cancel-in-progress: false
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-26.04
+    # The write credentials live only in this environment, which admits main alone,
+    # so no other branch or PR workflow can change Cloudflare or the state.
+    environment: terraform
+    defaults:
+      run:
+        working-directory: ./terraform
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_STATE_WRITE_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_STATE_WRITE_SECRET_ACCESS_KEY }}
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN_WRITE }}
+      TF_VAR_email_routing_destinations: ${{ secrets.EMAIL_ROUTING_DESTINATIONS }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Development Environment
+        uses: jdx/mise-action@82a612c5ab8bcda7cc5db6b7e81a8e7584c3dc6e # v5.2.3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -input=false -lock-timeout=10m
+
+      - name: Terraform Apply
+        run: terraform apply -input=false -no-color -auto-approve -lock-timeout=10m
