@@ -50,6 +50,9 @@ resource "cloudflare_email_routing_rule" "forward" {
 
 resource "cloudflare_email_routing_catch_all" "this" {
   zone_id = local.cloudflare_zone_id
+  # Why an explicit empty name: the API stores "" and returns it, so leaving
+  # name unset shows a "" -> null diff on every plan.
+  name    = ""
   enabled = false
 
   matchers = [{
