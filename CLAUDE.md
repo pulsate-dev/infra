@@ -37,4 +37,5 @@ terraform plan -input=false -lock=false
 - Flat root module, one file per resource family. Cloudflare account/zone IDs are hard-coded in `main.tf` locals (not secrets).
 - Comments explain constraints and rejected alternatives ("why not"), in English.
 - CI holds read-only credentials only; write credentials live in the `terraform` environment restricted to `main`.
+- Never run `terraform apply` (or any state-mutating command) locally; CD on `main` is the only apply path. Local credentials are read-only by design.
 - Required status checks on `main` are pinned to CI job names (`terraform-plan`). Renaming a job requires updating the ruleset.

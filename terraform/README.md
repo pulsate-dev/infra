@@ -75,9 +75,11 @@ State バケットは Terraform 自身では管理しません (自分の state 
    - Object Read & Write: CD 用
 3. 上の表のとおり GitHub に secret を登録します．
 
-## 手元での実行
+## 手元での plan (メンテナ向け)
 
-`mise.local.toml` に認証情報を書いてから実行します (このファイルは Git 管理外です)．
+**`terraform apply` は CD だけが実行します．手元からは実行しないでください．** 手元で使うのは読み取り専用のトークン (Cloudflare は Read 権限，R2 は Object Read only) だけで，これらでは apply は失敗します．書き込み用のトークンは Environment `terraform` 以外に置かないでください．
+
+通常の変更は pull request の CI で plan を確認すれば十分です．CI を待たずに plan を見たい場合だけ，`mise.local.toml` に読み取り専用の認証情報を書いて実行します (このファイルは Git 管理外です)．
 
 ```toml
 [env]
