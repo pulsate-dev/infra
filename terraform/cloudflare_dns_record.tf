@@ -6,14 +6,20 @@
 
 # --- Websites ---
 
-# pulsate.dev - website (Cloudflare Pages, until it moves to Workers)
+# pulsate.dev - website (Workers, deployed from pulsate-dev/website)
+#
+# Why a placeholder instead of no record: the website Worker is attached by a
+# route (pulsate.dev/*), and a route only receives traffic for a hostname that
+# has a proxied record. 100:: is the discard prefix, so nothing ever reaches an
+# origin even if the route is removed.
 resource "cloudflare_dns_record" "website" {
   zone_id = local.cloudflare_zone_id
   name    = "pulsate.dev"
-  content = "website-bas.pages.dev"
-  type    = "CNAME"
+  content = "100::"
+  type    = "AAAA"
   ttl     = 1
   proxied = true
+  comment = "Route anchor for the website Worker"
 }
 
 resource "cloudflare_dns_record" "spec" {
