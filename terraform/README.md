@@ -11,7 +11,6 @@ State は Cloudflare R2 のバケット `pulsate-terraform-state` に置いて�
 | [`cloudflare_dns_record.tf`](./cloudflare_dns_record.tf) | DNS レコード (website，spec，demo，SPF / DMARC，各種ドメイン認証) |
 | [`cloudflare_email_routing.tf`](./cloudflare_email_routing.tf) | Email Routing の転送ルール，転送先アドレス，catch-all |
 | [`cloudflare_worker.tf`](./cloudflare_worker.tf) | このリポジトリにソースを持つ Worker (`link.pulsate.dev`) とそのカスタムドメイン．スクリプト本体は [`workers/`](./workers) にあります |
-| [`imports.tf`](./imports.tf) | 既存リソースの取り込み用．初回の apply 後に削除します |
 
 website，caramel，blog の Worker は各リポジトリの `wrangler.jsonc` から wrangler でデプロイしており，ここでは扱いません．
 
